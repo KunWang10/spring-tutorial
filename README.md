@@ -17,7 +17,7 @@
 ## 具体步骤
 因为没有购买IntelliJ IDEA Ultimate版本，因此我选择使用 VS Code 初始化该项目。VS Code 插件市场有spring的官方插件，很好用。
 
-1. 初始化
+1. 初始化
 
     如图所示，使用VS Code 提供的插件，可以方便的生产一个Spring project, 跟着提示走就行。这里选择 Maven project。
 ![init0.jpg](images/init0.jpg "pic 0")
@@ -25,19 +25,19 @@
 
     * Spring 官方网站 [https://start.spring.io/](https://start.spring.io/)
     
-        这个基本跟VS Code一模一样。个人觉得还是VS Code更方便，直接本地生成，也免得下载zip包解压的过程。而且可能是操作的问题，第一次下载zip包并尝试用IntelliJ CE版本编码的时候，配置也出现一些问题。
+        这个基本跟VS Code一模一样。个人觉得还是VS Code更方便，直接本地生成，也免得下载zip包解压的过程。而且可能是操作的问题，第一次下载zip包并尝试用IntelliJ CE版本编码的时候，配置也出现一些问题。
 
     * IntelliJ IDEA Ultimate版本有支持spring的扩展
 
         毕竟我很穷，没有正版码。没有尝试。不建议在网上搜索注册码，用的话还是支持正版。
 
-    * 新建 Maven / Gradle project 手动配置。
+    * 新建 Maven / Gradle project 手动配置。
 
-        这样可能可以更透彻的理解spring框架。有时间 && 精力 && 兴趣 可以自行尝试。
+        这样可能可以更透彻的理解spring框架。有时间 && 精力 && 兴趣 可以自行尝试。
 
-    Spring project 基本款 get✅
+    Spring project 基本款 get✅
 
-    截图展示了程序结构及pom.xml的一部分，重点关注dependencies部分：
+    截图展示了程序结构及pom.xml的一部分，重点关注dependencies部分：
 ![init1.jpg](images/init1.jpg "pic 1")
 
 2. 建立返回类
@@ -47,7 +47,7 @@
 ```
 {
     "id" : 1,
-    "message" : "Hey, Kun! You are the NO.1 visitor here! "
+    "message" : "Hey, Kun! You are the NO.1 visitor here! "
 }
 ```
 
@@ -87,7 +87,7 @@ public class Message {
 
     ```@RequestMapping``` 确保HTTP请求对应相应的方法
 
-    ```@RequestParam``` 用来获取Query中的参数
+    ```@RequestParam``` 用来获取Query中的参数
 
     我们在```src/main/java/com/kun/restful_web_service``` 下新建一个简单的java类```MessageController.java```
     
@@ -133,8 +133,8 @@ public static void main(String[] args)
 作为程序入口，在程序初始化是，已经产生了```DemoApplication.java```
  文件，我们可以将它改成我们希望的名字, 这里我将它改为```Application.java```
 
- 现在代码部分结束，我们需要build可运行的jar包：
- 对于Maven，运行 
+ 现在代码部分结束，我们需要build可运行的jar包：
+ 对于Maven，运行 
  ```
     ./mvnw spring-boot:run
  ```
