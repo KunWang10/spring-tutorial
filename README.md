@@ -1,4 +1,4 @@
-[第一课：搭建一个RESTful服务器](#第一课：搭建一个RESTful服务器)
+[第一课：搭建一个RESTful服务器](https://github.com/KunWang10/spring-tutorial/blob/master/README.md#%E7%AC%AC%E4%B8%80%E8%AF%BE%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AArestful%E6%9C%8D%E5%8A%A1%E5%99%A8)
 
 [第二课：连接MySQL](#第二课：连接MySQL)
 
@@ -85,9 +85,9 @@ public class Message {
 ```
 
 3. 建立Controller
-在Spring RESTful web services中，HTTP请求是由Controller控制的。
+在Spring RESTful web services中，HTTP请求是由Controller控制的。
 
-    ```@RestController``` 表明该类为RESTful Controller
+    ```@RestController``` 表明该类为RESTful Controller
 
     ```@RequestMapping``` 确保HTTP请求对应相应的方法
 
@@ -148,7 +148,7 @@ public static void main(String[] args)
 
 ```
 
-在 VS Code 或 IntelliJ 或大部分IDE中，我们可以省去这个步骤，直接点击运行即可：
+在 VS Code 或 IntelliJ 或大部分IDE中，我们可以省去这个步骤，直接点击运行即可：
 ![run0.jpg](images/run0.jpg "run 0")
 ![run1.jpg](images/run1.jpg "run 1")
 
