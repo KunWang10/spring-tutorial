@@ -23,7 +23,7 @@
 
     如图所示，使用VS Code 提供的插件，可以方便的生产一个Spring project, 跟着提示走就行。这里选择 Maven project。
 
-![init0.jpg](images/init0.jpg "pic 0")
+    ![init0.jpg](images/init0.jpg "pic 0")
 
     当然这里有也很多种方法新建project
 
