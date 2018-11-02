@@ -1,6 +1,6 @@
 [第一课：搭建一个RESTful服务器](https://github.com/KunWang10/spring-tutorial/blob/master/README.md#%E7%AC%AC%E4%B8%80%E8%AF%BE%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AArestful%E6%9C%8D%E5%8A%A1%E5%99%A8)
 
-[第二课：连接MySQL](#第二课：连接MySQL)
+[第二课：连接MySQL](https://github.com/KunWang10/spring-tutorial/blob/master/README.md#%E7%AC%AC%E4%BA%8C%E8%AF%BE%E8%BF%9E%E6%8E%A5mysql)
 
 # 第一课：搭建一个RESTful服务器
  
@@ -41,7 +41,7 @@
 
     Spring project 基本款 get✅
 
-    截图展示了程序结构及pom.xml的一部分，重点关注dependencies部分：
+    截图展示了程序结构及pom.xml的一部分，重点关注dependencies部分：
 
 ![init1.jpg](images/init1.jpg "pic 1")
 
@@ -158,7 +158,7 @@ public class Message {
     现在代码部分结束，我们需要build可运行的jar包：
     对于Maven，运行 
     ```
-        ./mvnw spring-boot:run
+    ./mvnw spring-boot:run
     ```
     或者
     ```
@@ -225,7 +225,7 @@ public class Message {
 5. 配置pom.xml文件
     
     * 在dependencies中加入以下dependency:
-        * MySQL Connector
+    	* MySQL Connector
         ```xml
         <dependency>
 			<groupId>mysql</groupId>
@@ -333,7 +333,7 @@ public class Message {
 
     }
     ```
-9. 新建控制器（Controller）类
+9. 新建控制器（Controller）类
         
     ```src/main/java/com/kun/mysql/MainController.java```
 
@@ -409,13 +409,13 @@ public class Message {
 
     2. http://localhost:8080/mysql/add/?name=kun&email=kun@email.com
 
-    增加name为kun，email为kun@email.com的用户
+    增加name为kun，email为kun@email.com的用户
 
     ![tb1](images/tb1.jpg "tb1")
    
     3. http://localhost:8080/mysql/add/?name=kun&email=kun@email.com
 
-    再次增加name为kun，email为kun@email.com的用户，返回相同，不再贴图
+    再次增加name为kun，email为kun@email.com的用户，返回相同，不再贴图
 
     4. http://localhost:8080/mysql 
     
@@ -431,7 +431,7 @@ public class Message {
 
     5. http://localhost:8080/mysql/add/?id=1&name=wang&email=wang@email.com
 
-    增加id为1，name为wang，email为wang@email.com的用户（与已知用户有冲突）
+    增加id为1，name为wang，email为wang@email.com的用户（与已知用户有冲突）
     
     ![tb3](images/tb3.jpg "tb3")
 
@@ -448,7 +448,7 @@ public class Message {
 
     6. http://localhost:8080/mysql/add/?id=7&name=wang&email=wang@email.com
 
-    增加id为7，name为wang，email为wang@email.com的用户
+    增加id为7，name为wang，email为wang@email.com的用户
 
     获取所有user：
 
@@ -471,12 +471,4 @@ public class Message {
 
     ![tb7](images/tb7.jpg "tb7")
 
-    id为4的用户已被删除
-
-12. update等其他功能待续
-
-
-
-
-
-
+    id为4的用户已被
