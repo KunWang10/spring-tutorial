@@ -1,4 +1,4 @@
-package com.kun.restful_web_service;
+package kun.com.spring_samples;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ApplicationTests {
+public class DemoApplicationTests {
 
 	@Test
 	public void contextLoads() {
