@@ -2,7 +2,7 @@
 
 [第二课：连接MySQL](https://github.com/KunWang10/spring-tutorial/blob/master/README.md#%E7%AC%AC%E4%BA%8C%E8%AF%BE%E8%BF%9E%E6%8E%A5mysql)
 
-[第三课：上传文件](https://github.com/KunWang10/spring-tutorial/blob/master/README.md#%E7%AC%AC%E4%BA%8C%E8%AF%BE%E8%BF%9E%E6%8E%A5mysql)
+[第三课：上传文件](https://github.com/KunWang10/spring-tutorial#%E7%AC%AC%E4%B8%89%E8%AF%BE%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6)
 
 # 第一课：搭建一个RESTful服务器
  
@@ -682,7 +682,7 @@ public class Message {
     ```
     如果保留第21行，则每次启动服务器，均会删除所有文件。注释掉则会保存上次上传的文件。
 
-7. 截图待补充
+7. 截图待补充
     ![up0](images/up0.jpg "up0")
         
     ![up1](images/up1.jpg "up1")
