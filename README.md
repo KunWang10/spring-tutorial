@@ -2,6 +2,8 @@
 
 [第二课：连接MySQL](https://github.com/KunWang10/spring-tutorial/blob/master/README.md#%E7%AC%AC%E4%BA%8C%E8%AF%BE%E8%BF%9E%E6%8E%A5mysql)
 
+[第三课：上传文件](https://github.com/KunWang10/spring-tutorial/blob/master/README.md#%E7%AC%AC%E4%BA%8C%E8%AF%BE%E8%BF%9E%E6%8E%A5mysql)
+
 # 第一课：搭建一个RESTful服务器
  
 ## 实现功能
@@ -472,3 +474,222 @@ public class Message {
     ![tb7](images/tb7.jpg "tb7")
 
     id为4的用户已被
+
+# 第三课：上传文件
+ 
+## 实现功能
+
+* 上传文件到服务器
+
+## 环境 & 工具
+* Mac OS Version 10.13.4
+    * java version "1.8.0_102"
+    * Java(TM) SE Runtime Environment (build 1.8.0_102-b14)
+    * Java HotSpot(TM) 64-Bit Server VM (build 25.102-b14, mixed mode)
+* IntelliJ IDEA
+
+## 具体步骤
+
+1. 添加依赖
+
+    ```xml
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+    ```
+
+2. Spring 官方教程提供了一系列的接口，类和异常类，我们把他们复制到路径         ```src/main/java/com/kun/file_upload```
+    下, 其中包括
+    ```StorageService.java```
+
+    ```FileSystemStorageService.java```
+
+    ```StorageException.java```
+
+    ```StorageFileNotFoundException.java```
+
+    ```StorageProperties.java```
+    
+3. 添加配置
+    在```src/main/resources/application.properties```中添加以下三行：
+    ```
+    spring.servlet.multipart.max-file-size=128MB
+    spring.servlet.multipart.max-request-size=128MB
+    spring.http.multipart.enabled=false
+    ```
+    分别限制了单个上传文件大小，请求大小和是否指出多部分上传
+
+4. 在```src/main/resources/templates/uploadForm.html```添加如下html模板：
+    ```html
+    <!DOCTYPE html>
+    <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8">
+        <title>上传文件</title>
+    </head>
+    <body>
+
+    <div th:if="${message}">
+        <h2 th:text="${message}"/>
+    </div>
+
+    <div>
+        <form method="POST" enctype="multipart/form-data" action="/">
+            <table>
+                <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+                <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+            </table>
+        </form>
+    </div>
+
+    <div>
+        <ul>
+            <li th:each="file : ${files}">
+                <a th:href="${file}" th:text="${file}" />
+            </li>
+        </ul>
+    </div>
+
+    </body>
+    </html>
+    ```
+    
+    5. 建立文件上传控制器
+    ```src/main/java/com/kun/file_upload/FileUploadController.java```
+
+    代码如下, 解释参见代码内注释：
+    ```java
+    package com.kun.file_upload;
+
+    import java.io.IOException;
+    import java.util.stream.Collectors;
+
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.core.io.Resource;
+    import org.springframework.http.HttpHeaders;
+    import org.springframework.http.ResponseEntity;
+    import org.springframework.stereotype.Controller;
+    import org.springframework.ui.Model;
+    import org.springframework.web.bind.annotation.ExceptionHandler;
+    import org.springframework.web.bind.annotation.GetMapping;
+    import org.springframework.web.bind.annotation.PathVariable;
+    import org.springframework.web.bind.annotation.PostMapping;
+    import org.springframework.web.bind.annotation.RequestParam;
+    import org.springframework.web.bind.annotation.ResponseBody;
+    import org.springframework.web.multipart.MultipartFile;
+    import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+    import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+    /**
+    * 标记此类为Controller
+    */
+    @Controller
+    public class FileUploadController {
+        private final StorageService storageService;
+
+        @Autowired
+        public FileUploadController(StorageService storageService) {
+            this.storageService = storageService;
+        }
+
+        /**
+        * 获取所有已上传的文件，并将其以list形式显示于页面
+        * @param model
+        * @return
+        * @throws IOException
+        */
+
+        @GetMapping("/")
+        public String listUploadedFiles(Model model) throws IOException {
+
+            model.addAttribute("files", storageService.loadAll().map(
+                    path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
+                            "serveFile", path.getFileName().toString()).build().toString())
+                    .collect(Collectors.toList()));
+
+            return "uploadForm"; //模版名称
+        }
+
+        /**
+        * 在 http://localhost:8080/files/{filename} 可下载/保存该文件
+        * @param filename 文件名
+        * @return
+        */
+        @GetMapping("/files/{filename:.+}")
+        @ResponseBody
+        public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+
+            Resource file = storageService.loadAsResource(filename);
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                    "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+        }
+
+
+        /**
+        * 
+        * @param file
+        * @param redirectAttributes
+        * @return
+        */
+        @PostMapping("/")
+        public String handleFileUpload(@RequestParam("file") MultipartFile file,
+                                    RedirectAttributes redirectAttributes) {
+
+            storageService.store(file);
+            redirectAttributes.addFlashAttribute("message",
+                    "You successfully uploaded " + file.getOriginalFilename() + "!");
+
+            return "redirect:/";
+        }
+
+        @ExceptionHandler(StorageFileNotFoundException.class)
+        public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {
+            return ResponseEntity.notFound().build();
+        }
+
+    }
+    ```
+6. 修改```Application.java```，运行程序
+    代码如下：
+    ```java
+    package com.kun.file_upload;
+
+    import org.springframework.boot.CommandLineRunner;
+    import org.springframework.boot.SpringApplication;
+    import org.springframework.boot.autoconfigure.SpringBootApplication;
+    import org.springframework.boot.context.properties.EnableConfigurationProperties;
+    import org.springframework.context.annotation.Bean;
+
+
+    @SpringBootApplication
+    @EnableConfigurationProperties(StorageProperties.class)
+    public class Application {
+
+        public static void main(String[] args) {
+            SpringApplication.run(Application.class, args);
+        }
+
+        @Bean
+        CommandLineRunner init(StorageService storageService) {
+            return (args) -> {
+                //storageService.deleteAll();
+                storageService.init();
+            };
+        }
+    }
+
+    ```
+    如果保留第21行，则每次启动服务器，均会删除所有文件。注释掉则会保存上次上传的文件。
+
+7. 截图待补充
+    ![up0](images/up0.jpg "up0")
+        
+    ![up1](images/up1.jpg "up1")
+
+    ![up2](images/up2.jpg "up2")
+
+    ![up3](images/up3.jpg "up3")
+
+
+
